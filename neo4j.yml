@@ -33,8 +33,11 @@ spec:
               name: neo4j-credentials
         ports:
         - containerPort: 7474
-          name: neo4j
           protocol: TCP
+          name: http
+        - containerPort: 7687
+          protocol: TCP
+          name: bolt
         resources: {}
         terminationMessagePath: /dev/termination-log
         volumeMounts:
@@ -48,9 +51,6 @@ spec:
         gcePersistentDisk:
           fsType: ext4
           pdName: neo4j
-      - name: auth
-        secret:
-          secretName: neo4j-auth
 ---
 apiVersion: v1
 kind: Service
@@ -64,6 +64,11 @@ spec:
   - port: 7474
     protocol: TCP
     targetPort: 7474
+    name: http
+  - port: 7687
+    protocol: TCP
+    targetPort: 7687
+    name: bolt
   selector:
     app: neo4j
   sessionAffinity: None
