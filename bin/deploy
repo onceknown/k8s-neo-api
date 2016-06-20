@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION = $(cat VERSION)
+VERSION=$(cat VERSION)
 
 docker tag neo-app:${VERSION} gcr.io/api-dannydavidson-com/neo-app:${VERSION}
 gcloud docker push gcr.io/api-dannydavidson-com/neo-app:${VERSION}

@@ -14,4 +14,4 @@ ADD . .
 EXPOSE 11235
 EXPOSE 8080
 
-CMD ["node", "server.js"]
+CMD ["node", "app/server.js"]
