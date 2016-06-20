@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: neo4j
+    tier: db
+  name: neo4j-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neo4j
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: neo4j
+      name: neo4j
+    spec:
+      containers:
+      - image: neo4j:3.0
+        imagePullPolicy: Always
+        name: neo4j
+        env:
+        - name: NEO4J_AUTH
+          valueFrom:
+            secretKeyRef:
+              key: auth
+              name: neo4j-credentials
+        ports:
+        - containerPort: 7474
+          name: neo4j
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+        - mountPath: /data
+          name: neo4j
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: neo4j
+        gcePersistentDisk:
+          fsType: ext4
+          pdName: neo4j
+      - name: auth
+        secret:
+          secretName: neo4j-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    name: neo4j
+  name: neo4j
+spec:
+  ports:
+  - port: 7474
+    protocol: TCP
+    targetPort: 7474
+  selector:
+    app: neo4j
+  sessionAffinity: None
+  type: LoadBalancer

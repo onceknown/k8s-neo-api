@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+VERSION = $(cat VERSION)
+
+docker tag neo-app:${VERSION} gcr.io/api-dannydavidson-com/neo-app:${VERSION}
+gcloud docker push gcr.io/api-dannydavidson-com/neo-app:${VERSION}
+
+sed "s/{{NEO_APP_VERSION}}/${VERSION}/g" neo-app.yml > neo-app.versioned.yml
+kubectl apply -f neo-app.versioned.yml

@@ -1,0 +1,41 @@
+{
+  "name": "k8s-neo-api",
+  "version": "0.1.0",
+  "description": "POC ledger and reporting API using neo4j",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha --debug=6868 --recursive app/test",
+    "cover": "istanbul cover _mocha app/test/**/*.js -- -R spec",
+    "coverage": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dannydavidson/k8s-neo-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dannydavidson/k8s-neo-api/issues"
+  },
+  "engines": {
+    "node": "6"
+  },
+  "homepage": "https://github.com/dannydavidson/k8s-neo-api#readme",
+  "devDependencies": {
+    "coveralls": "^2.11.9",
+    "eslint": "^2.3.0",
+    "eslint-config-defaults": "^9.0.0",
+    "expect": "^1.14.0",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1"
+  },
+  "dependencies": {
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "express-jwt": "^3.3.0",
+    "neo4j-driver": "^1.0.0",
+    "winston": "^2.2.0",
+    "winston-gke": "^1.0.0"
+  }
+}

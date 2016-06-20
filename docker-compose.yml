@@ -1,0 +1,30 @@
+version: '2'
+services:
+  neo-app:
+    build: .
+    image: neo-app:latest
+    ports:
+     - "11235:11235"
+     - "8080:8080"
+    volumes:
+     - ./app:/src/app
+    environment:
+      NEO_USER: "neo4j"
+      NEO_PASS: ${NEO_PASS}
+      MOUNT_PATH: "/neo-app"
+      START_NODE_INSPECTOR_ON_PORT: "8080"
+    depends_on:
+     - neo4j
+    links:
+      - neo4j
+    container_name: neo-app
+    command: nodemon --debug=5858 app/server.js
+  neo4j:
+    image: neo4j:3.0
+    ports:
+     - "7474:7474"
+     - "7473:7473"
+     - "7687:7687"
+    environment:
+      NEO4J_AUTH: "neo4j/${NEO_PASS}"
+    container_name: neo4j

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker run -e "START_NODE_INSPECTOR_ON_PORT=9090" -p 9090:9090 -v "${PWD}/app:/src/app" -i -t neo-app:latest npm test "$@"

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: neo-app-config
+type: Opaque
+data:
+  mountpath: {{MOUNT_PATH}}

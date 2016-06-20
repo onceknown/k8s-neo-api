@@ -1,0 +1,73 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: neo-app
+    tier: api
+  name: neo-app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: neo-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: neo-app
+        tier: app
+      name: neo-app
+    spec:
+      containers:
+      - image: gcr.io/api-dannydavidson-com/neo-app:{{NEO_APP_VERSION}}
+        name: neo-app
+        env:
+        - name: NEO_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: neo4j-credentials
+        - name: NEO_PASS
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: neo4j-credentials
+        - name: MOUNT_PATH
+          valueFrom:
+            secretKeyRef:
+              key: mountpath
+              name: neo-app-config
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 11235
+          name: ledger-graph
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: neo-app
+  name: neo-app
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 11235
+    nodePort: 32346
+  selector:
+    app: neo-app
+  sessionAffinity: None
+  type: NodePort
