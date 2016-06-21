@@ -12,6 +12,5 @@ RUN npm install
 ADD . .
 
 EXPOSE 11235
-EXPOSE 8080
 
 CMD ["node", "app/server.js"]

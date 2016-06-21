@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-docker run -e "START_NODE_INSPECTOR_ON_PORT=9090" -p 9090:9090 -v "${PWD}/app:/src/app" -i -t neo-app:latest npm test "$@"
+# if any args are passed assume we're deving and mount the local volume
+if [ $# -ge 1 ]; then
+  VOLUME="-v ${PWD}/app:/src/app"
+fi
+
+docker run -e "START_NODE_INSPECTOR_ON_PORT=9090" -p 9090:9090 ${VOLUME} -i -t neo-app:latest npm test "$@"

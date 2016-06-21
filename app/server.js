@@ -5,22 +5,17 @@ const express = require('express');
 const neo4j = require('neo4j-driver').v1;
 const winston = require('winston');
 const cors = require('cors');
-const jwt = require('express-jwt');
 const gkeLogger = require('winston-gke');
 
-// Pass when sitting behind load-balancer on a route (e.g. '/ledger-graph')
+// Pass when sitting behind load-balancer on a route (e.g. '/neo-app')
 const MOUNT_PATH = process.env.MOUNT_PATH || '';
 
-// Initialize app, neo4j connection, logger and auth
+// Initialize app, neo4j connection, and logger
 const app = express();
 const neo = neo4j.driver(process.env.NEO_ADDRESS || 'bolt://neo4j',
                         neo4j.auth.basic(process.env.NEO_USER || 'neo4j',
                                          process.env.NEO_PASS || 'neo4j'));
 const logger = gkeLogger(new winston.Logger());
-const auth = jwt({
-  secret: new Buffer(process.env.AUTH_CLIENT_SECRET || '', 'base64'),
-  audience: process.env.AUTH_CLIENT_ID || ''
-});
 
 // Pull version from file if available
 let version;

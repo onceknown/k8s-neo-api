@@ -2,4 +2,4 @@
 
 VERSION="$(git rev-parse --short HEAD)"
 echo ${VERSION} > VERSION
-docker build -t neo-app:${VERSION} .
+docker build -t neo-app:latest -t neo-app:${VERSION} .

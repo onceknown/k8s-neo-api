@@ -1,0 +1,17 @@
+{
+    "env": {
+        "node": true,
+        "mocha": true,
+        "es6": true
+    },
+    "rules": {
+        "max-len": [ 2, 200, 2 ],
+        "dot-location": 0,
+        "no-invalid-this": 0,
+        "no-debugger": 1,
+        "strict": [2, "global"]
+    },
+    "extends": [
+        "defaults/configurations/google"
+    ]
+}

@@ -38,12 +38,10 @@ spec:
         - containerPort: 7687
           protocol: TCP
           name: bolt
-        resources: {}
         terminationMessagePath: /dev/termination-log
         volumeMounts:
         - mountPath: /data
           name: neo4j
-      dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       volumes:
@@ -55,7 +53,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
   labels:
     name: neo4j
   name: neo4j
@@ -71,5 +68,4 @@ spec:
     name: bolt
   selector:
     app: neo4j
-  sessionAffinity: None
   type: LoadBalancer

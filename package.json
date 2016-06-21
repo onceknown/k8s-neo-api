@@ -1,12 +1,11 @@
 {
   "name": "k8s-neo-api",
   "version": "0.1.0",
-  "description": "POC ledger and reporting API using neo4j",
+  "description": "Starter project for a node microservice api on k8s using neo4j for persistence",
   "main": "server.js",
   "scripts": {
     "test": "mocha --debug=6868 --recursive app/test",
-    "cover": "istanbul cover _mocha app/test/**/*.js -- -R spec",
-    "coverage": "npm run cover && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "lint": "eslint app/**/*.js"
   },
   "repository": {
     "type": "git",
