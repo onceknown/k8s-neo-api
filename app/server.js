@@ -35,7 +35,10 @@ app.use(cors());
 // Respond 200 at '/' to satisfy backend healthchecks
 app.get('/', (req, res) => res.status(200).end());
 
-// set up system info routes
+// mount this at root for easy readiness check
+app.get('/ok', require('./handlers/health').isOk(neo, logger));
+
+// set up system info routes on MOUNTPATH
 app.get(MOUNT_PATH + '/', require('./handlers/version')(version, logger));
 app.get(MOUNT_PATH + '/ok', require('./handlers/health').isOk(neo, logger));
 

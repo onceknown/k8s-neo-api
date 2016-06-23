@@ -50,6 +50,9 @@ spec:
           limits:
             cpu: 500m
         terminationMessagePath: /dev/termination-log
+        readinessProbe:
+          path: /ok
+          port: 11235
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
