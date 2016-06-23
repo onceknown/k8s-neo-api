@@ -38,7 +38,7 @@ spec:
               name: neo4j-credentials
         - name: MOUNT_PATH
           valueFrom:
-            secretKeyRef:
+            configMapKeyRef:
               key: mountpath
               name: neo-app-config
         imagePullPolicy: Always
