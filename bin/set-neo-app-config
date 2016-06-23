@@ -1,7 +1,3 @@
 #!/usr/bin/env bash
 
-MOUNT_PATH=$(echo -n '/neo-app' | base64)
-
-sed "s/{{MOUNT_PATH}}/${MOUNT_PATH}/g" neo-app-config.yml > neo-app-config.set.yml
-
-kubectl apply -f neo-app-config.set.yml
+kubectl apply -f neo-app-config.yml

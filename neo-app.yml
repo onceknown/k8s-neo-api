@@ -39,7 +39,7 @@ spec:
         - name: MOUNT_PATH
           valueFrom:
             configMapKeyRef:
-              key: mountpath
+              key: mount.path
               name: neo-app-config
         imagePullPolicy: Always
         ports:
